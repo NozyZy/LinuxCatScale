@@ -161,9 +161,9 @@ starttheshow(){ #Production
 # Collect all hidden files in User directory. Non-recursive.
 # includes .bash_history .bashrc .viminfo .bash_profile .profile
 #
-get_hidden_home_files(){ #Production
+get_home_files(){ #Production
 
- grep -v "/nologin\|/sync\|/false" /etc/passwd | cut -f6 -d ':' | xargs -I {} find {} ! -path {} -prune -type f -name .\* -print0 | xargs -0 tar -czvf $OUTROOT/$OUTDIR/User_Files/hidden-user-home-dir.tar.gz  > $OUTROOT/$OUTDIR/User_Files/hidden-user-home-dir-list.txt
+ grep -v "/nologin\|/sync\|/false" /etc/passwd | cut -f6 -d ':' | xargs -I {} find {} ! -path {} -prune -print0 | xargs -0 tar -czvf $OUTROOT/$OUTDIR/User_Files/user-home-dir.tar.gz  > $OUTROOT/$OUTDIR/User_Files/user-home-dir-list.txt
 
 }
 
@@ -290,8 +290,8 @@ get_netinfo_GNU(){ #Production
 	
 	#Get routing table
 	echo "      Collecting Routing Table..."
-	if ip --details route show table all &>/dev/null; then
-		ip --details route show table all > $OUTROOT/$OUTDIR/Process_and_Network/$OUTFILE-routetable.txt
+	if ip route &>/dev/null; then
+		ip route > $OUTROOT/$OUTDIR/Process_and_Network/$OUTFILE-routetable.txt
 	else
 		netstat -rn > $OUTROOT/$OUTDIR/Process_and_Network/$OUTFILE-routetable.txt
 	fi
@@ -765,8 +765,8 @@ case $oscheck in
 		{
 	
 			echo "Ubuntu\Debian Detected. Collecting;"
-			echo " - Home directory hidden files..."
-			get_hidden_home_files
+			echo " - Home directory files..."
+			get_home_files
 			echo " - Process info..."
 			get_procinfo_GNU
 			echo " - Network info..."
@@ -805,8 +805,8 @@ case $oscheck in
 		{
 			
 			echo "Red Hat\Centos\Fedora Detected. Collecting;"
-			echo " - Home directory hidden files..."
-			get_hidden_home_files
+			echo " - Home directory files..."
+			get_home_files
 			echo " - Process info.."
 			get_procinfo_GNU
 			echo " - Network info..."
@@ -844,8 +844,8 @@ case $oscheck in
 		{
 			
 			echo "Sunos\Solaris Detected. Collecting;"
-			echo " - Home directory hidden files..."
-			get_hidden_home_files
+			echo " - Home directory files..."
+			get_home_files
 			echo " - Process info.."
 			get_procinfo_Solaris
 			echo " - Network info..."
@@ -882,8 +882,8 @@ case $oscheck in
 		#Incompatible Distribution
         {
 			echo "Incompatible Distribution Detected. Using GNU methods and Hoping for the Best"
-			echo " - Home directory hidden files..."
-			get_hidden_home_files
+			echo " - Home directory files..."
+			get_home_files
 			echo " - Process info.."
 			get_procinfo_GNU
 			echo " - Network info..."

@@ -61,14 +61,14 @@ extract()
 				tar -xf extracted/$FILE/System_Info/*etc-modified-files.tar.gz --strip-components=1 -C extracted/$FILE/System_Info/etc-modified-files
 				rm -f extracted/$FILE/System_Info/*etc-modified-files.tar.gz
 			fi
-			if [ -f extracted/$FILE/User_Files/*hidden-user-home-dir.tar.gz ]; then
-				mkdir extracted/$FILE/User_Files/hidden-user-home-dir/ 
-				tar -xf extracted/$FILE/User_Files/*hidden-user-home-dir.tar.gz -C extracted/$FILE/User_Files/hidden-user-home-dir
-				rm -f extracted/$FILE/User_Files/*hidden-user-home-dir.tar.gz
-				find extracted/$FILE/User_Files/hidden-user-home-dir/ -type f -print0 | xargs -0 rename 's/\.//g'
-                if [ -d extracted/$FILE/User_Files/hidden-user-home-dir/home/ ]; then
-			    	mv extracted/$FILE/User_Files/hidden-user-home-dir/home/* extracted/$FILE/User_Files/hidden-user-home-dir/
-				    rm -rf extracted/$FILE/User_Files/hidden-user-home-dir/home/
+			if [ -f extracted/$FILE/User_Files/*user-home-dir.tar.gz ]; then
+				mkdir extracted/$FILE/User_Files/user-home-dir/ 
+				tar -xf extracted/$FILE/User_Files/*user-home-dir.tar.gz -C extracted/$FILE/User_Files/user-home-dir
+				rm -f extracted/$FILE/User_Files/*user-home-dir.tar.gz
+				find extracted/$FILE/User_Files/user-home-dir/ -type f -print0 | xargs -0 rename 's/\.//g'
+                if [ -d extracted/$FILE/User_Files/user-home-dir/home/ ]; then
+			    	mv extracted/$FILE/User_Files/user-home-dir/home/* extracted/$FILE/User_Files/user-home-dir/
+				    rm -rf extracted/$FILE/User_Files/user-home-dir/home/
                 fi
 			fi
 			# If folder is empty there were no files in var/spool/cron/crontabs directory
